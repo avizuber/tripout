@@ -331,6 +331,10 @@ document.addEventListener('mouseleave', () => {
   document.body.style.cursor = 'none';
 });
 
+document.addEventListener('mouseenter', () => {
+  document.body.style.cursor = 'auto';
+});
+
 document.addEventListener('keydown', (event) => {
   if (welcomeElement.style.display === 'none') {
     if (event.key === 'f' || event.key === 'F') {
