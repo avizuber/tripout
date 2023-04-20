@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Trip Out</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div id="welcome">
+      <h1 class="animated-gradient-text">Trip Out</h1>
+      <p>A browser-based music visualizer written with ChatGPT</p>
+      <button id="startButton" class="gradient-button">Start</button>
+      <small>Your browser will ask you permission to use your microphone.</small>
+      <small>This is so the visualizer can hear your music. Nothing is recorded or sent to a server.</small>
+    </div>
+    <div id="settings">
+      <button id="stopButton"><img src="./icons/stop.svg" alt="stop icon" height="12" width="12" /> Stop</button>
+      <button id="fullscreen"><img src="./icons/expand-wide.svg" alt="stop icon" height="12" width="12" />Full Screen</button>
+      <button id="bars"><img src="./icons/chart-simple.svg" alt="stop icon" height="12" width="12" />Bars</button>
+      <button id="trippy"><img src="./icons/person-falling.svg" alt="stop icon" height="12" width="12" />Trippy</button>
+      <button id="poop"><img src="./icons/poop.svg" alt="stop icon" height="12" width="12" />Poop</button>
+    </div>
+    <canvas id="visualizer"></canvas>
+    <script src="./tripout.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1954TLTHR0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-1954TLTHR0');
+    </script>
+  </body>
+</html>
