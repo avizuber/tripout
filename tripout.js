@@ -224,35 +224,50 @@ function psychedelicVisualize() {
 function poopVisualize() {
   const poopEmoji = new Image();
   poopEmoji.src = 'https://emojicdn.elk.sh/%F0%9F%92%A9?size=100';
+  const cornEmoji = new Image();
+  cornEmoji.src = 'https://emojicdn.elk.sh/%F0%9F%8C%BD?size=100';
 
-  let poops = [];
+  analyser.fftSize = 2048;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+
+  const poops = [];
 
   function draw() {
-    animationId = requestAnimationFrame(draw);
-
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    if (Math.random() < 0.1) {
+    analyser.getByteFrequencyData(dataArray);
+
+    let sum = dataArray.reduce((a, b) => a + b, 0);
+    let avg = sum / dataArray.length;
+
+    if (Math.random() < avg / 255) {
+      const isCorn = Math.random() < 0.025;
       poops.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         scale: 1,
         opacity: 1,
+        emoji: isCorn ? cornEmoji : poopEmoji,
       });
     }
 
-    poops = poops.filter((poop) => poop.opacity > 0.01);
-
-    poops.forEach((poop) => {
-      ctx.save();
+    poops.forEach((poop, i) => {
       ctx.globalAlpha = poop.opacity;
-      ctx.drawImage(poopEmoji, poop.x, poop.y, 100 * poop.scale, 100 * poop.scale);
-      ctx.restore();
+      ctx.drawImage(poop.emoji, poop.x, poop.y, 100 * poop.scale, 100 * poop.scale);
 
-      poop.scale += 0.03;
-      poop.opacity -= 0.015;
+      poop.scale += 0.01;
+      poop.opacity -= 0.01;
+
+      if (poop.opacity <= 0) {
+        poops.splice(i, 1);
+      }
     });
+
+    ctx.globalAlpha = 1;
+
+    requestAnimationFrame(draw);
   }
 
   draw();
